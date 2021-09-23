@@ -43,19 +43,13 @@ COPY make_replacement.sh /usr/local/bin/make
 RUN bash -c 'chmod +x /usr/local/bin/make'
 
 COPY environment.yml /fever/
-# COPY requirements.txt /fever/
-#RUN mamba install --yes python=$PYTHON_VERSION 		
-# RUN mamba create env --yes -n fever python=$PYTHON_VERSION
+
 RUN mamba env create -f environment.yml
 
 SHELL ["bash", "-lc"]
 ENV PATH /opt/conda/envs/fever/bin:$PATH
-# ENV TARGETPLATFORM $TARGETPLATFORM
 
-# RUN /bin/bash -c "conda activate fever"
-RUN conda activate fever
-
-# RUN pip install -r requirements.txt
+RUN /bin/bash -c "source activate fever"
 
 RUN python -c "import nltk; nltk.download('punkt')"
 
